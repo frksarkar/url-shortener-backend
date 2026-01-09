@@ -20,12 +20,6 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/url', urlRoutes);
-
-// Public route: redirect short URL
-app.get('/:shortCode', redirectUrl);
-
 // Swagger Docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
@@ -61,6 +55,12 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.get('/api/health', (req, res) => {
 	res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
+
+app.use('/api/auth', authRoutes);
+app.use('/api/url', urlRoutes);
+
+// Public route: redirect short URL
+app.get('/:shortCode', redirectUrl);
 
 const PORT = process.env.PORT || 5000;
 
