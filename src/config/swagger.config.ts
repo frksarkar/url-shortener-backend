@@ -1,5 +1,7 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 
+const base_url = process.env.BASE_URL || 'http://localhost:5000';
+
 const options: swaggerJsdoc.Options = {
 	definition: {
 		openapi: '3.0.0',
@@ -8,11 +10,7 @@ const options: swaggerJsdoc.Options = {
 			version: '1.0.0',
 			description: 'A simple URL shortening service with user authentication and click analytics.',
 		},
-		servers: [
-			{
-				url: 'http://localhost:5000/api', // Base URL for API
-			},
-		],
+		servers: [{ url: base_url + '/api' }, { url: base_url }],
 		tags: [
 			{
 				name: 'Health',
