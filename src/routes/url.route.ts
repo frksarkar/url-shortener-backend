@@ -1,11 +1,8 @@
 import { Router } from 'express';
-import { shortenUrl, redirectUrl, getMyUrls } from '../controllers/url.controller';
-import { protect } from '../middleware/auth.middleware';
+import { protect } from '../middleware';
+import { getMyUrls, shortenUrl, redirectUrl } from '../controllers';
 
 const router = Router();
-
-// Public route: redirect short URL
-router.get('/:shortCode', redirectUrl);
 
 // Protected routes
 /**
@@ -58,7 +55,7 @@ router.get('/:shortCode', redirectUrl);
  *       401:
  *         description: Unauthorized
  */
-router.post('/shorten', protect, shortenUrl);
 router.get('/me', protect, getMyUrls);
+router.post('/shorten', protect, shortenUrl);
 
 export default router;
