@@ -1,5 +1,31 @@
 import { Schema, model } from 'mongoose';
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Url:
+ *       type: object
+ *       properties:
+ *         originalUrl:
+ *           type: string
+ *         shortCode:
+ *           type: string
+ *         clicks:
+ *           type: number
+ *         createdBy:
+ *           type: string
+ *         createdAt:
+ *           type: string
+ *         updatedAt:
+ *           type: string
+ *       required:
+ *         - originalUrl
+ *         - shortCode
+ *         - createdBy
+ *
+ */
+
 const urlSchema = new Schema(
 	{
 		originalUrl: { type: String, required: true },
