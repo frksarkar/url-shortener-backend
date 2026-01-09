@@ -15,7 +15,13 @@ const app = express();
 
 // Middlewares
 app.use(helmet());
-app.use(cors());
+app.use(
+	cors({
+		origin: '*',
+		methods: ['GET', 'POST', 'PUT', 'DELETE'],
+		allowedHeaders: ['Content-Type', 'Authorization'],
+	})
+);
 app.use(morgan('dev'));
 app.use(express.json());
 
@@ -62,13 +68,22 @@ app.use('/api/auth', authRoutes);
 app.use('/api/url', urlRoutes);
 
 // Public route: redirect short URL
+/**
+ * @openapi
+ * /{shortCode}:
+ *   get:
+ *     summary: Redirect to original URL
+ *     responses:
+ *       '302':
+ *         description: Redirect to original URL
+ */
 app.get('/:shortCode', redirectUrl);
 
 const PORT = process.env.PORT || 5000;
 
 connectDB(() => {
 	app.listen(PORT, () => {
-		console.log(`🚀 Server running on ${process.env.BASE_URL}:${PORT}`);
+		console.log(`🚀 Server running on :${PORT}`);
 	});
 });
 
