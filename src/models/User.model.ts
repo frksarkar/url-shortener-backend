@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import bcrypt from 'bcrypt';
+import { NextFunction } from 'express';
 
 /**
  * @swagger
@@ -39,10 +40,10 @@ const userSchema = new Schema(
 );
 
 // Hash password before saving
-userSchema.pre('save', async function (next: any) {
-	if (!this.isModified('password')) return next();
-	this.password = await bcrypt.hash(this.password, 12);
-	next();
+userSchema.pre('save', async function () {
+	const user = this as any;
+	if (!user.isModified('password')) return;
+	user.password = await bcrypt.hash(user.password, 12);
 });
 
 // Compare password method
