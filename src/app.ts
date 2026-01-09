@@ -3,14 +3,13 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import authRoutes from './routes/auth.route';
-import connectDB from './config/db.config';
-import urlRoutes from './routes/url.route';
 import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from './config/swagger.config'; // ← ADD THIS
+import { swaggerSpec, connectDB } from './config';
+
+// Routes
+import { authRoutes, urlRoutes } from './routes';
 
 dotenv.config();
-
 const app = express();
 
 // Middlewares
