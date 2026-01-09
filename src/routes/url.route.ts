@@ -5,6 +5,69 @@ import { getMyUrls, shortenUrl, redirectUrl } from '../controllers';
 const router = Router();
 
 // Protected routes
+
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: User authentication
+ */
+
+/**
+ * @swagger
+ * /url/me:
+ *   get:
+ *     summary: Get all URLs created by the logged-in user
+ *     tags: [URLs]
+ *     responses:
+ *       200:
+ *         description: List of URLs with analytics
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 totalLinks:
+ *                   type: number
+ *                 totalClicks:
+ *                   type: number
+ *                 urls:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       originalUrl:
+ *                         type: string
+ *                       shortUrl:
+ *                         type: string
+ *                       clicks:
+ *                         type: number
+ *                       shortCode:
+ *                         type: string
+ *                       createdAt:
+ *                         type: string
+ *               required:
+ *                 - totalLinks
+ *                 - totalClicks
+ *                 - urls
+ *                 - urls[].id
+ *                 - urls[].originalUrl
+ *                 - urls[].shortUrl
+ *                 - urls[].clicks
+ *                 - urls[].shortCode
+ *                 - urls[].createdAt
+ *       500:
+ *         description: Server error
+ *
+ *       401:
+ *         description: Unauthorized
+ *
+ */
+
+router.get('/me', protect, getMyUrls);
+
 /**
  * @swagger
  * tags:
@@ -55,7 +118,6 @@ const router = Router();
  *       401:
  *         description: Unauthorized
  */
-router.get('/me', protect, getMyUrls);
 router.post('/shorten', protect, shortenUrl);
 
 export default router;
