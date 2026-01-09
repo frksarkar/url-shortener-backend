@@ -4,8 +4,136 @@ import { protect } from '../middleware/auth.middleware';
 
 const router = Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: Authentication endpoints
+ */
+
+/**
+ * @swagger
+ * /auth/register:
+ *   post:
+ *     summary: Register a new user
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *                 format: password
+ *     responses:
+ *       201:
+ *         description: User created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 token:
+ *                   type: string
+ *       400:
+ *         description: Bad request (e.g., user exists)
+ */
 router.post('/register', register);
+
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     summary: Login user
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *                 format: password
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 token:
+ *                   type: string
+ *       400:
+ *         description: Invalid credentials
+ */
 router.post('/login', login);
+
+/**
+ * @swagger
+ * /url/me:
+ *   get:
+ *     summary: Get all URLs created by the logged-in user
+ *     tags: [URLs]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of URLs with analytics
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 totalLinks:
+ *                   type: number
+ *                 totalClicks:
+ *                   type: number
+ *                 urls:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       originalUrl:
+ *                         type: string
+ *                       shortUrl:
+ *                         type: string
+ *                       clicks:
+ *                         type: number
+ *       401:
+ *         description: Unauthorized
+ */
 router.get('/me', protect, getMe);
 
 export default router;
