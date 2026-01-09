@@ -6,6 +6,8 @@ import morgan from 'morgan';
 import authRoutes from './routes/auth.route';
 import connectDB from './config/db.config';
 import urlRoutes from './routes/url.route';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './config/swagger.config'; // ← ADD THIS
 
 dotenv.config();
 
@@ -20,6 +22,9 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/url', urlRoutes);
+
+// Swagger Docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Health check
 app.get('/health', (req, res) => {
