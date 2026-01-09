@@ -17,6 +17,7 @@ const router = Router();
  *   post:
  *     summary: Register a new user
  *     tags: [Auth]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -62,6 +63,7 @@ router.post('/register', register);
  *   post:
  *     summary: Login user
  *     tags: [Auth]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -100,12 +102,10 @@ router.post('/login', login);
 
 /**
  * @swagger
- * /url/me:
+ * /auth/me:
  *   get:
  *     summary: Get all URLs created by the logged-in user
- *     tags: [URLs]
- *     security:
- *       - bearerAuth: []
+ *     tags: [Auth]
  *     responses:
  *       200:
  *         description: List of URLs with analytics

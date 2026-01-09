@@ -37,6 +37,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *   get:
  *     summary: Check server health
  *     tags: [Health]
+ *     description: Check if the server is healthy
+ *     security: []
  *     responses:
  *       200:
  *         description: Server is healthy
