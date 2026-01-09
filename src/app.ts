@@ -27,7 +27,35 @@ app.use('/api/url', urlRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Health check
-app.get('/health', (req, res) => {
+/**
+ * @swagger
+ * tags:
+ *   name: Health
+ *   description: URL shortening and analytics
+ */
+
+/**
+ * @swagger
+ * /health:
+ *   get:
+ *     summary: Check server health
+ *     tags: [Health]
+ *     responses:
+ *       200:
+ *         description: Server is healthy
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                 timestamp:
+ *                   type: string
+ *                   format: date-time
+ */
+
+app.get('api/health', (req, res) => {
 	res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 

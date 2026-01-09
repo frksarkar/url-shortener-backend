@@ -24,7 +24,7 @@ const options: swaggerJsdoc.Options = {
 		},
 		security: [{ bearerAuth: [] }], // Apply globally (optional)
 	},
-	apis: ['./src/routes/*.ts', './src/controllers/*.ts'], // Path to files with JSDoc annotations
+	apis: ['./src/routes/*.ts', './src/controllers/*.ts', './src/app.ts'], // Path to files with JSDoc annotations
 };
 
 const swaggerSpec = swaggerJsdoc(options);
