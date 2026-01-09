@@ -13,6 +13,20 @@ const options: swaggerJsdoc.Options = {
 				url: 'http://localhost:5000/api', // Base URL for API
 			},
 		],
+		tags: [
+			{
+				name: 'Health',
+				description: 'Health check',
+			},
+			{
+				name: 'Auth',
+				description: 'User authentication',
+			},
+			{
+				name: 'URLs',
+				description: 'URL shortening and analytics',
+			},
+		],
 		components: {
 			securitySchemes: {
 				bearerAuth: {
