@@ -13,6 +13,17 @@ export const shortenUrl = async (req: Request, res: Response) => {
 		if (!originalUrl) {
 			return res.status(400).json({ message: 'Original URL is required' });
 		}
+		// check limit of urls per user 100
+		const userUrls = await Url.find({ createdBy: userId }).countDocuments();
+		if (userUrls >= 100) {
+			return res.status(400).json({ message: 'You have reached the limit of 100 URLs' });
+		}
+
+		// Check if the URL already exists in the database
+		const existingUrl = await Url.findOne({ originalUrl });
+		if (existingUrl) {
+			return res.status(400).json({ message: 'URL already exists' });
+		}
 
 		// Optional: validate URL format
 		try {
