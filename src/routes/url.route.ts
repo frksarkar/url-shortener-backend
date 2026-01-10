@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { getMyUrls, shortenUrl, deleteUrl } from '../controllers/url.controller.js';
-import { protect } from '../middleware/auth.middleware.js';
+import { protect } from '../middleware';
+import { getMyUrls, shortenUrl, deleteUrl } from '../controllers';
 
 const router = Router();
 

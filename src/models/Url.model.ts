@@ -36,4 +36,4 @@ const urlSchema = new Schema(
 	{ timestamps: true }
 );
 
-export const Url = model('Url', urlSchema);
+export default model('Url', urlSchema);

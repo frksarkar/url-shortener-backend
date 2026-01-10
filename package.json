@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"dev": "npx tsx watch src/app.ts",
+		"dev": "nodemon src/app.ts",
 		"start": "node dist/app.js",
 		"build": "tsc"
 	},
@@ -12,7 +12,7 @@
 	"author": "Omar Faruk Sarkar",
 	"repository": "https://github.com/frksarkar/url-shortener-backend",
 	"license": "ISC",
-	"type": "module",
+	"type": "commonjs",
 	"dependencies": {
 		"bcrypt": "^6.0.0",
 		"cors": "^2.8.5",
@@ -22,7 +22,7 @@
 		"jsonwebtoken": "^9.0.3",
 		"mongoose": "^9.1.2",
 		"morgan": "^1.10.1",
-		"nanoid": "^5.1.6",
+		"nanoid": "^3.3.4",
 		"swagger-jsdoc": "^6.2.8",
 		"swagger-ui-express": "^5.0.1"
 	},
@@ -32,10 +32,9 @@
 		"@types/express": "^5.0.6",
 		"@types/jsonwebtoken": "^9.0.10",
 		"@types/morgan": "^1.9.10",
-		"@types/node": "^25.0.6",
 		"@types/swagger-jsdoc": "^6.0.4",
 		"@types/swagger-ui-express": "^4.1.8",
-		"tsx": "^4.21.0",
-		"typescript": "^5.9.3"
+		"nodemon": "^3.1.11",
+		"ts-node": "^10.9.2"
 	}
 }

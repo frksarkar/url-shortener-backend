@@ -39,4 +39,6 @@ const options: swaggerJsdoc.Options = {
 	apis: ['./src/routes/*.ts', './src/controllers/*.ts', './src/app.ts', './src/models/*.ts'], // Path to files with JSDoc annotations
 };
 
-export const swaggerSpec = swaggerJsdoc(options);
+const swaggerSpec = swaggerJsdoc(options);
+
+export default swaggerSpec;

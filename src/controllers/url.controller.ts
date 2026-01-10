@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { Url } from '../models/Url.model.js';
-import { generateShortId } from '../utils/generateShortId.js';
+import { generateShortId } from '../utils';
+import { Url } from '../models';
 
 // @desc    Create short URL
 // @route   POST /api/url/shorten

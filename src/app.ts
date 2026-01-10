@@ -1,17 +1,16 @@
 import express from 'express';
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
-import { connectDB } from './config/db.config.js';
-import { swaggerSpec } from './config/swagger.config.js';
+import { swaggerSpec, connectDB } from './config';
 
 // Routes
-import authRoutes from './routes/auth.route.js';
-import urlRoutes from './routes/url.route.js';
-import { redirectUrl } from './controllers/url.controller.js';
+import { authRoutes, urlRoutes } from './routes';
+import { redirectUrl } from './controllers';
 
+dotenv.config();
 const app = express();
 const options: cors.CorsOptions = {
 	origin: process.env.CLIENT_URL || 'http://localhost:3000',
