@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { User } from '../models';
-import { generateToken } from '../utils';
+import { User } from '../models/User.model.js';
+import { generateToken } from '../utils/jwt.utils.js';
 
 // @desc    Register user
 // @route   POST /api/auth/register

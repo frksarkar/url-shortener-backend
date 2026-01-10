@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import { SignOptions } from 'jsonwebtoken';
-dotenv.config();
 
 interface JwtPayload {
 	id: string;
