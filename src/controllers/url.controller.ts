@@ -66,6 +66,24 @@ export const redirectUrl = async (req: Request, res: Response) => {
 	}
 };
 
+// @desc    Delete URL
+// @route   DELETE /api/url/:id
+// @access  Private
+export const deleteUrl = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.params;
+		const url = await Url.findById(id);
+		if (!url) {
+			return res.status(404).json({ message: 'URL not found' });
+		}
+		await url.deleteOne();
+		res.status(200).json({ message: 'URL deleted' });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: 'Server error' });
+	}
+};
+
 // @desc    Get all URLs created by user + analytics
 // @route   GET /api/url/me
 // @access  Private

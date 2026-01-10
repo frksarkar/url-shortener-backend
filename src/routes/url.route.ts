@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { protect } from '../middleware';
-import { getMyUrls, shortenUrl, redirectUrl } from '../controllers';
+import { getMyUrls, shortenUrl, deleteUrl } from '../controllers';
 
 const router = Router();
 
@@ -119,5 +119,27 @@ router.get('/me', protect, getMyUrls);
  *         description: Unauthorized
  */
 router.post('/shorten', protect, shortenUrl);
+
+/**
+ * @swagger
+ * /url/{id}:
+ *   delete:
+ *     summary: Delete a short URL
+ *     tags: [URLs]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: URL deleted
+ *       401:
+ *         description: Unauthorized
+ */
+router.delete('/:id', protect, deleteUrl);
 
 export default router;
