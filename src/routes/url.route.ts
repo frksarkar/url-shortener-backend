@@ -113,6 +113,8 @@ router.get('/me', protect, getMyUrls);
  *                   type: string
  *                 clicks:
  *                   type: number
+ *                 createdAt:
+ *                   type: string
  *       400:
  *         description: Invalid URL
  *       401:

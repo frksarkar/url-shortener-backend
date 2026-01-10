@@ -107,11 +107,11 @@ router.post('/login', login);
  * @swagger
  * /auth/me:
  *   get:
- *     summary: Get all URLs created by the logged-in user
+ *     summary: Get user profile
  *     tags: [Auth]
  *     responses:
  *       200:
- *         description: List of URLs with analytics
+ *         description: User profile
  *         content:
  *           application/json:
  *             schema:

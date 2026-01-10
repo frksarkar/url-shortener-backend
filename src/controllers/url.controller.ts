@@ -46,6 +46,7 @@ export const shortenUrl = async (req: Request, res: Response) => {
 			shortUrl: `${process.env.BASE_URL}/${url.shortCode}`,
 			shortCode: url.shortCode,
 			clicks: url.clicks,
+			createdAt: url.createdAt,
 		});
 	} catch (error) {
 		console.error(error);
