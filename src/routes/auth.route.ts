@@ -87,12 +87,15 @@ router.post('/register', register);
  *             schema:
  *               type: object
  *               properties:
- *                 _id:
- *                   type: string
- *                 name:
- *                   type: string
- *                 email:
- *                   type: string
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     email:
+ *                       type: string
  *                 token:
  *                   type: string
  *       400:
