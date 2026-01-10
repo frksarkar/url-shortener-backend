@@ -109,17 +109,29 @@ Server will run at:
     http://localhost:5000/api-docs
 ```
 
-## 🎨 Design Decisions 
-- **MVC Architecture** → clean separation of concerns 
-- **JWT Authentication** → stateless security 
-- **Middleware-based Authorization** → centralized access control 
-- **Service-style Utilities** → reusable logic helpers
-- **Swagger Documentation** → clear API reference
-- **nanoid** → collision-resistant short IDs
+## 🎨 Design Decisions
+
+- **Clean Architecture**: Follows a modular structure with clear separation of concerns (controllers, routes, models, middleware, utils) for maintainability and scalability.
+- **JWT-Based Authentication**: Stateless, secure user authentication using JSON Web Tokens with 7-day expiry; sensitive operations are protected via middleware.
+- **Centralized Authorization**: Reusable `protect` middleware enforces authentication across private routes consistently.
+- **Collision-Resistant Short IDs**: Uses `nanoid` (6-character, URL-safe, high-entropy) to generate unique short codes with minimal collision risk.
+- **Input Validation & Security**: 
+  - Validates URL format before shortening.
+  - Enforces 100 URLs per user limit to prevent abuse.
+  - Prevents duplicate original URLs.
+  - Secures passwords with `bcrypt` hashing.
+- **Built-in Analytics**: Tracks click counts per short link with atomic increment on redirect.
+- **Comprehensive API Documentation**: Auto-generated Swagger/OpenAPI docs (`/api-docs`) with live examples and schema definitions.
+- **Developer Experience**: 
+  - TypeScript for type safety.
+  - Environment-based configuration.
+  - Morgan logging for request visibility.
+  - CORS and Helmet for security hardening.
+- **RESTful Conventions**: Consistent resource naming, status codes, and error responses.
 
 ## ⚠️ Known Limitations
 
-* No refresh token implementation
-* No rate limiting (can be added)
-* No automated tests
-* Basic analytics only (click count)
+- **No Refresh Token Support**: JWT access tokens expire after 7 days with no mechanism to refresh them silently.
+- **No Rate Limiting**: The API lacks request rate limiting, making it potentially vulnerable to abuse or DDoS.
+- **No Automated Tests**: Unit, integration, or end-to-end tests are not included (relies on manual validation).
+- **Basic Analytics Only**: Tracks only total click count—no IP logging, geolocation, device info, or time-series data.
