@@ -10,6 +10,7 @@
 	},
 	"keywords": [],
 	"author": "Omar Faruk Sarkar",
+	"repository": "https://github.com/frksarkar/url-shortener-backend",
 	"license": "ISC",
 	"type": "commonjs",
 	"dependencies": {
