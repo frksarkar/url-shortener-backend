@@ -5,10 +5,11 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "nodemon src/app.ts",
-		"start": "node dist/app.js"
+		"start": "node dist/app.js",
+		"build": "tsc"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "Omar Faruk Sarkar",
 	"license": "ISC",
 	"type": "commonjs",
 	"dependencies": {

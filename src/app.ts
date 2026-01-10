@@ -26,8 +26,10 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // Routes
-app.use('/', (req, res) => {
-	res.send('URL Shortener API is running');
+app.get('', (req, res) => {
+	res.json({
+		message: 'Welcome to URL Shortener API',
+	});
 });
 // Swagger Docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
