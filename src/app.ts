@@ -1,10 +1,12 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
-import { swaggerSpec, connectDB } from './config';
+import { connectDB } from './config';
 
 // Routes
 import { authRoutes, urlRoutes } from './routes';
@@ -32,38 +34,12 @@ app.get('', (req, res) => {
 	});
 });
 // Swagger Docs
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+const swaggerFile = path.join(process.cwd(), 'swagger.json');
+const swaggerData = fs.readFileSync(swaggerFile, 'utf8');
+const swaggerDocument = JSON.parse(swaggerData);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Health check
-/**
- * @swagger
- * tags:
- *   name: Health
- *   description: URL shortening and analytics
- */
-
-/**
- * @swagger
- * /health:
- *   get:
- *     summary: Check server health
- *     tags: [Health]
- *     description: Check if the server is healthy
- *     security: []
- *     responses:
- *       200:
- *         description: Server is healthy
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                 timestamp:
- *                   type: string
- *                   format: date-time
- */
 
 app.get('/api/health', (req, res) => {
 	res.json({ status: 'OK', timestamp: new Date().toISOString() });
@@ -73,15 +49,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/url', urlRoutes);
 
 // Public route: redirect short URL
-/**
- * @openapi
- * /{shortCode}:
- *   get:
- *     summary: Redirect to original URL
- *     responses:
- *       '302':
- *         description: Redirect to original URL
- */
+
 app.get('/:shortCode', redirectUrl);
 
 const PORT = process.env.PORT || 5000;
