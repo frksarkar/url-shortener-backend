@@ -1,0 +1,465 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "URL Shortener API",
+		"version": "1.0.0",
+		"description": "A simple URL shortening service with user authentication and click analytics."
+	},
+	"servers": [
+		{
+			"url": "http://localhost:5000/api"
+		},
+		{
+			"url": "http://localhost:5000"
+		}
+	],
+	"tags": [
+		{
+			"name": "Health",
+			"description": "Health check"
+		},
+		{
+			"name": "Auth",
+			"description": "User authentication"
+		},
+		{
+			"name": "URLs",
+			"description": "URL shortening and analytics"
+		}
+	],
+	"components": {
+		"securitySchemes": {
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		},
+		"schemas": {
+			"Url": {
+				"type": "object",
+				"properties": {
+					"originalUrl": {
+						"type": "string"
+					},
+					"shortCode": {
+						"type": "string"
+					},
+					"clicks": {
+						"type": "number"
+					},
+					"createdBy": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					}
+				},
+				"required": ["originalUrl", "shortCode", "createdBy"]
+			},
+			"User": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					}
+				},
+				"required": ["name", "email", "password"]
+			}
+		}
+	},
+	"security": [
+		{
+			"bearerAuth": []
+		}
+	],
+	"paths": {
+		"/auth/register": {
+			"post": {
+				"summary": "Register a new user",
+				"tags": ["Auth"],
+				"security": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"required": ["name", "email", "password"],
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string",
+										"format": "password"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "User created successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"_id": {
+											"type": "string"
+										},
+										"name": {
+											"type": "string"
+										},
+										"email": {
+											"type": "string"
+										},
+										"token": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request (e.g., user exists)"
+					}
+				}
+			}
+		},
+		"/auth/login": {
+			"post": {
+				"summary": "Login user",
+				"tags": ["Auth"],
+				"security": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"required": ["email", "password"],
+								"properties": {
+									"email": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string",
+										"format": "password"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Login successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"user": {
+											"type": "object",
+											"properties": {
+												"_id": {
+													"type": "string"
+												},
+												"name": {
+													"type": "string"
+												},
+												"email": {
+													"type": "string"
+												}
+											}
+										},
+										"token": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Invalid credentials"
+					}
+				}
+			}
+		},
+		"/auth/me": {
+			"get": {
+				"summary": "Get user profile",
+				"tags": ["Auth"],
+				"responses": {
+					"200": {
+						"description": "User profile",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"totalLinks": {
+											"type": "number"
+										},
+										"totalClicks": {
+											"type": "number"
+										},
+										"urls": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"originalUrl": {
+														"type": "string"
+													},
+													"shortUrl": {
+														"type": "string"
+													},
+													"clicks": {
+														"type": "number"
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		},
+		"/url/me": {
+			"get": {
+				"summary": "Get all URLs created by the logged-in user",
+				"tags": ["URLs"],
+				"responses": {
+					"200": {
+						"description": "List of URLs with analytics",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"totalLinks": {
+											"type": "number"
+										},
+										"totalClicks": {
+											"type": "number"
+										},
+										"urls": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"originalUrl": {
+														"type": "string"
+													},
+													"shortUrl": {
+														"type": "string"
+													},
+													"clicks": {
+														"type": "number"
+													},
+													"shortCode": {
+														"type": "string"
+													},
+													"createdAt": {
+														"type": "string"
+													}
+												}
+											}
+										}
+									},
+									"required": [
+										"totalLinks",
+										"totalClicks",
+										"urls",
+										"urls[].id",
+										"urls[].originalUrl",
+										"urls[].shortUrl",
+										"urls[].clicks",
+										"urls[].shortCode",
+										"urls[].createdAt"
+									]
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Server error"
+					}
+				}
+			}
+		},
+		"/url/shorten": {
+			"post": {
+				"summary": "Create a short URL",
+				"tags": ["URLs"],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"required": ["originalUrl"],
+								"properties": {
+									"originalUrl": {
+										"type": "string",
+										"example": "https://google.com"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Short URL created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string"
+										},
+										"originalUrl": {
+											"type": "string"
+										},
+										"shortUrl": {
+											"type": "string"
+										},
+										"shortCode": {
+											"type": "string"
+										},
+										"clicks": {
+											"type": "number"
+										},
+										"createdAt": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Invalid URL"
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		},
+		"/url/{id}": {
+			"delete": {
+				"summary": "Delete a short URL",
+				"tags": ["URLs"],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "URL deleted"
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		},
+		"/health": {
+			"get": {
+				"summary": "Check server health",
+				"tags": ["Health"],
+				"description": "Check if the server is healthy",
+				"security": [],
+				"responses": {
+					"200": {
+						"description": "Server is healthy",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "string"
+										},
+										"timestamp": {
+											"type": "string",
+											"format": "date-time"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/{shortCode}": {
+			"get": {
+				"summary": "Redirect to original URL",
+				"responses": {
+					"302": {
+						"description": "Redirect to original URL"
+					}
+				}
+			}
+		}
+	}
+}
