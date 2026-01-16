@@ -1,32 +1,4 @@
 {
-	"openapi": "3.0.0",
-	"info": {
-		"title": "URL Shortener API",
-		"version": "1.0.0",
-		"description": "A simple URL shortening service with user authentication and click analytics."
-	},
-	"servers": [
-		{
-			"url": "http://localhost:5000/api"
-		},
-		{
-			"url": "http://localhost:5000"
-		}
-	],
-	"tags": [
-		{
-			"name": "Health",
-			"description": "Health check"
-		},
-		{
-			"name": "Auth",
-			"description": "User authentication"
-		},
-		{
-			"name": "URLs",
-			"description": "URL shortening and analytics"
-		}
-	],
 	"components": {
 		"securitySchemes": {
 			"bearerAuth": {

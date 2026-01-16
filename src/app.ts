@@ -1,12 +1,12 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import fs from 'fs';
 import path from 'path';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import { connectDB } from './config';
+import { swaggerSpec } from './config';
 
 // Routes
 import { authRoutes, urlRoutes } from './routes';
@@ -34,10 +34,12 @@ app.get('', (req, res) => {
 	});
 });
 // Swagger Docs
-const swaggerFile = path.join(process.cwd(), 'swagger.json');
-const swaggerData = fs.readFileSync(swaggerFile, 'utf8');
-const swaggerDocument = JSON.parse(swaggerData);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(
+	'/api-docs',
+	swaggerUi.serve,
+	swaggerUi.setup(swaggerSpec, { customCssUrl: '/swagger-ui/swagger-ui.css', customJs: ['/swagger-ui/swagger-ui-bundle.js', '/swagger-ui/swagger-ui-standalone-preset.js'] }),
+);
+app.use('/swagger-ui', express.static(path.dirname(require.resolve('swagger-ui-dist'))));
 
 // Health check
 
