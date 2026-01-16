@@ -1,9 +1,11 @@
 import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerDoc from '../../swagger.json'
 
 const base_url = process.env.BASE_URL || 'http://localhost:5000';
 
 const options: swaggerJsdoc.Options = {
 	definition: {
+        ...swaggerDoc,
 		openapi: '3.0.0',
 		info: {
 			title: 'URL Shortener API',
